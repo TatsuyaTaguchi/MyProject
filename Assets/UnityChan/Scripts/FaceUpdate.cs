@@ -36,11 +36,21 @@ namespace UnityChan
 		}
 
 		float current = 0;
+		float face_anm_timer = 0f;
 
 		void Update ()
 		{
 #if ENABLE_INPUT_SYSTEM
-			;
+			if (isKeepFace)
+			{
+				face_anm_timer += Time.deltaTime;
+				if (face_anm_timer > 5f)
+				{
+					ChangeFace("default@sd_hmd");
+					face_anm_timer = 0f;
+					isKeepFace = false;
+				}
+			}
 #else
 			if (Input.GetMouseButton (0)) {
 				current = 1;
@@ -50,12 +60,11 @@ namespace UnityChan
 			anim.SetLayerWeight (1, current);
 #endif
 		}
-	 
+
 
 		//アニメーションEvents側につける表情切り替え用イベントコール
 		public void OnCallChangeFace (string str)
 		{   
-			Debug.Log("OnCallChangeFace=" + str);
 			int ichecked = 0;
 			foreach (var animation in animations) {
 				if (str == animation.name) {
@@ -74,6 +83,7 @@ namespace UnityChan
 		void ChangeFace (string str)
 		{
 			isKeepFace = true;
+			face_anm_timer = 0f;
 			current = 1;
 			anim.CrossFade (str, 0);
 		}
