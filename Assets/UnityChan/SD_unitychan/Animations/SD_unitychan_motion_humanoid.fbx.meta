@@ -1217,7 +1217,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.008305647
         functionName: OnCallChangeFace
         data: smile@sd_hmd
         objectReferenceParameter: {instanceID: 0}
